@@ -115,7 +115,9 @@ def exemple_union():
 def selection(table, pred):
     """Construit le flux des éléments de ~table~ qui satisfont le prédicat
        ~pred~ (fonction des tuples dans les booléens)."""
-    yield {}
+    for elem in table:
+        if pred(elem):
+             yield elem  
 
 def exemple_selection():
     for un_tuple in selection(table({'a': (30, 100), 'b': (10, 50)}, nb=10),
@@ -131,7 +133,10 @@ def selection_index(fichier, idx, valeurs) :
     Attention : si un élément de ~valeurs~ n'est pas référencé dans ~idx~, on
     souhaite qu'il n'y ait pas d'erreur.
     """
-    yield {}
+    for val in valeurs:
+        if val in idx:
+            for ligne in idx[val]:
+                yield ligne
 
 def appariement(t1, t2):
     """Renvoie un tuple ayant pour clé les clés de ~t1~ et de ~t2~.
