@@ -91,11 +91,12 @@ def projection2(table, champs):
     Renvoie une erreur si un attribut de ~champs~ n'est pas un attribut des
     tuples de ~table~.
     """
-    for ligne in table:
+    def projection_ligne(ligne):
         for champ in champs:
             if champ not in ligne:
-                raise KeyError(f"L'attribut {champ} n'est pas présent dans les tuples de la table.")
-        yield {champ: ligne[champ] for champ in champs}
+                raise KeyError("L'attribut {} n'est pas présent dans les tuples de la table.".format(champ))
+        return {champ: ligne[champ] for champ in champs}
+    return transformation(table, projection_ligne)
 
 def union(t1, t2):
     """Construit un flux qui énumère les éléments de ~t1~ puis ceux de ~t2~."""
