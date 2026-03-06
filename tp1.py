@@ -68,11 +68,12 @@ def exemple_projection():
     for tuple_res in projection(table(schema ,nb=100),
                                 ['a', 'c']):
         print(tuple_res)
-
+    
 def transformation(table, f):
     """Renvoie un flux obtenu en appliquant ~f~ à chacun des tuples composant
 ~table~."""
-    yield {}
+    for ligne in table:
+        yield f(ligne)
 
 def exemple_transformation():
     schema = {'a': (1, 10), 'b': (40, 100), 'c': (20,30)}
