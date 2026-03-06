@@ -1,7 +1,3 @@
-import os
-import sys
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
 import random
 from disque import *
 
@@ -60,7 +56,11 @@ def projection(table, champs):
     Renvoie une exception si un attribut de ~champs~ n'est pas un attribut des
     tuples de ~table~.
     """
-    yield {}
+    for ligne in table:
+        for champ in champs:
+            if champ not in ligne:
+                raise KeyError("L'attribut {} n'est pas présent dans les tuples de la table.".format(champ))
+        yield {champ: ligne[champ] for champ in champs}
 
 def exemple_projection():
     """Exemple d'utilisation de la projection."""
