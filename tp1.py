@@ -91,11 +91,16 @@ def projection2(table, champs):
     Renvoie une erreur si un attribut de ~champs~ n'est pas un attribut des
     tuples de ~table~.
     """
-    yield {}
+    for ligne in table:
+        for champ in champs:
+            if champ not in ligne:
+                raise KeyError(f"L'attribut {champ} n'est pas présent dans les tuples de la table.")
+        yield {champ: ligne[champ] for champ in champs}
 
 def union(t1, t2):
     """Construit un flux qui énumère les éléments de ~t1~ puis ceux de ~t2~."""
-    yield {}
+    yield from t1
+    yield from t2
 
 def exemple_union():
     """Exemple d'utilisation de la fonction union."""
